@@ -4,5 +4,5 @@ Breve descrição do grupo
 * Grupo: 02
 * Alunos:
     - Inês Martin Soares up202108852 
-    - Aluno2 upZZZZZ
-    - Aluno3 upZZZZZ
+    - Igor Monteiro de Andrade up202108674
+    - Ricardo Nuno Pena Leite up202108850
