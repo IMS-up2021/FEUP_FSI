@@ -1,9 +1,8 @@
-
 Breve descrição do grupo
 
-* Turno: [L]XX
-* Grupo: YY
+* Turno: [L]10
+* Grupo: 02
 * Alunos:
-    - Aluno1 upZZZZZ 
+    - Inês Martin Soares up202108852 
     - Aluno2 upZZZZZ
     - Aluno3 upZZZZZ
