@@ -1,10 +1,14 @@
-# CTF - Wordpress CVE
+# Trabalho Realizado na Semana #3
+
+## CTF - Wordpress CVE
 
 While searching the website, we found the versions of the plugins used in the website in the following page:
 
 `http://ctf-fsi.fe.up.pt:5001/product/wordpress-hosting/`
 
-When selecting the 'Additional information' tab.
+When selecting the 'Additional information' tab, which were WooCommerce and Booster for WooCommerce.
+
+We also found the active users in the same page, when selecting the 'Reviews' tab, which were Orval Sanford and admin.
 
 Upon getting information on the plugins and their versions, we started to search for potential vulnerabilities that could allow us to enter any account registered in the website.
 Doing our research, we came across CVE-2021-34646, with a CVSS score of 9.8, whose description say "Versions up to, and including, 5.4.3, of the Booster for WooCommerce WordPress plugin are vulnerable to authentication bypass via the process_email_verification (...) This allows attackers to impersonate users and trigger an email address verification for arbitrary accounts (...)".
@@ -14,4 +18,4 @@ After discovering the CVE, we started looking for exploits that took advantage o
 
 `https://www.exploit-db.com/exploits/50299`
 
-After running the script, we are provided with 3 links, one of which provides access to the administrator account, from which we can access a link to enter the administrator page and through the first post we find the flag: "please don't bother me"
+After running the script, we are provided with 3 links, one of which provides access to the administrator account, from which we can access the link given in moodle (`http://ctf-fsi.fe.up.pt:5001/wp-admin/edit.php`)to enter the administrator page and through the first post we find the flag:{"please don't bother me"}.
