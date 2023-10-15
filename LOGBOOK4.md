@@ -30,11 +30,11 @@ Finalmente, no passo 3, usámos o comando ‘diff’ para comparar os arquivos �
 
 Seguindo o que foi pedido, compilámos e executámos o código contido em ‘myenv.c’. Na primeira execução, não foi apresentada nenhuma saída no terminal, como demonstrado:
 
-<img src="/images/image7.png">
+<img src="/images/image14.png">
 
 Em seguida, passamos para o passo 2, modificando uma linha de código e compilando e executando o código novamente. Desta vez, as variáveis de ambiente foram exibidas no terminal, conforme demonstrado nesta captura de tela:
 
-<img src="/images/image8.png">
+<img src="/images/image7.png">
 
 Podemos concluir que o último parâmetro da função ‘execve()’ corresponde ao ambiente no qual o comando é executado. Quando passamos ‘NULL’ como ambiente, nenhuma variável de ambiente é mostrada. No entanto, quando passamos ‘environ’ (o ambiente atual do usuário), todas as variáveis de ambiente são exibidas, como aconteceu na tarefa anterior.
 
@@ -42,29 +42,31 @@ Podemos concluir que o último parâmetro da função ‘execve()’ corresponde
 
 Após compilar e executar o código no arquivo ‘task4.c’, todas as variáveis de ambiente foram exibidas, como está ilustrado na captura de tela que se segue. Isto indica que a função ‘system()’ passa as variáveis de ambiente como um array para a função ‘execve()’.
 
-<img src="/images/image9.png">
+<img src="/images/image8.png">
 
 ### Task 5:
 
 Após criar o código no arquivo ‘task5.c’, compilá-lo, definir a propriedade como root e torná-lo um programa Set-UID, além de criar três variáveis de ambiente (PATH=/usr/bin, LD_LIBRARY_PATH=/home/seed/FSI, X=isto), ao executar o programa, observámos que todas as variáveis criadas aparecem no processo filho, exceto a variável LD_LIBRARY_PATH, por razões de segurança para evitar o controlo de links dinâmicos através de executáveis Set-UID.
 
+<img src="/images/image9.png">
 <img src="/images/image10.png">
-<img src="/images/image11.png">
 
 
 Captura de ecrã variáveis de ambiente demonstradas por printenv, que incluem LD_LIBRARY_PATH:
 
+<img src="/images/image11.png">
 <img src="/images/image12.png">
 
 ### Task 6:
 
 Para realizar esta tarefa, começámos por modificar a variável de ambiente PATH para incluir o diretório onde criámos os arquivos como o primeiro local para procurar o comando solicitado. Em seguida, compilámos o código fornecido no arquivo ‘task6.c’, definimos a propriedade como root e tornámos o programa num Set-UID. Em seguida, criámos um novo código no arquivo ‘attack.c’ com dois ‘printf()’ para indicar se o processo tem permissões de root ou não:
 
-
+<img src="/images/image15.png">
 
 Ao compilar o programa ‘attack.c’ com o nome ‘ls’ e executar o resultado da compilação do código ‘task6.c’, o código do primeiro é executado devido ao uso de um caminho relativo no comando ‘system()’. O ‘printf’ no terminal informa que o processo não tem permissões de root:
 
-<img src="/images/image13.png">
+<img src="/images/image17.png">
 
 No entanto, se executarmos o comando fornecido no enunciado ($ sudo ln -sf /bin/zsh /bin/sh), o mecanismo de segurança do ‘sh’ é contornado. Portanto, ao executar novamente o programa, o ‘printf’ informa que o processo tem permissões de root:
 
+<img src="/images/image16.png">
