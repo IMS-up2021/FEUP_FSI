@@ -34,11 +34,11 @@ Finalmente, no passo 3, usámos o comando ‘diff’ para comparar os arquivos �
 
 Seguindo o que foi pedido, compilámos e executámos o código contido em ‘myenv.c’. Na primeira execução, não foi apresentada nenhuma saída no terminal, como demonstrado:
 
-<img src="/images/image14.png">
+<img src="/images/image7.png">
 
 Em seguida, passamos para o passo 2, modificando uma linha de código e compilando e executando o código novamente. Desta vez, as variáveis de ambiente foram exibidas no terminal, conforme demonstrado nesta captura de tela:
 
-<img src="/images/image7.png">
+<img src="/images/image14.png">
 
 Podemos concluir que o último parâmetro da função ‘execve()’ corresponde ao ambiente no qual o comando é executado. Quando passamos ‘NULL’ como ambiente, nenhuma variável de ambiente é mostrada. No entanto, quando passamos ‘environ’ (o ambiente atual do usuário), todas as variáveis de ambiente são exibidas, como aconteceu na tarefa anterior.
 
