@@ -80,8 +80,10 @@ No entanto, se executarmos o comando fornecido no enunciado ($ sudo ln -sf /bin/
 Em primeiro lugar, acedemos ao servidor descrito no contexto com o programa netcat.
 Ao entrar no sevidor, podemos ler os ficheiros que lá estão guarados, e de destaque: 
 - o ficheiro "admin_note.txt", que descreve que temos acesso a criar folders no diretorio "/tmp";
-- o ficheiro "my_script.sh", que faz chamadas que vão buscar environment variables ao diretório "/env";
+- o ficheiro "my_script.sh", que faz chamadas que vão buscar environment variables ao diretório "/env" e também chama o ficheiro main.c compilado (reader);
 - o ficheiro "main.c", que usa a função access;
+
+Descobrimos também que o ficheiro "my_script.sh" é corrido regularmente com privilégio de root através de crond, o que levou a possibilidade de se conseguirmos fazer com que esse ficheiro executa-se um programa nosso podermos ter acesso a flag, que está escodida atrás de privilégios de root.
 
 Após uma pesquisa na internet, descobrimos que a função acccess tem o seguinte formato: `int access(const char *pathname, int mode);`
 
