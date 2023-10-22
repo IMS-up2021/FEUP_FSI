@@ -31,10 +31,11 @@ Nesta task começamos a tentar procurar uma maneira de utilizar a vulnerabilidad
 ![Alt text](image-7.png)
 
 Com a informação obtida, preenchemos então os campos necessários no ficheiro exploit.py, sendo estes: 
-a variável shellcode, em que inserimos o shellcode em 32-bit para executar uma shell;
-a variável start, em que definimos o local de início do shellcode no ficheiro, ou seja os 517 bytes totais menos o tamanho da variável shellcode;
-a variável ret, que indica o novo endereço de retorno, o qual definimos como o ebp + 400 (400 foi escolhido por ser um valor superior aos 100 bytes referidos anteriormente, para ter a certeza que este estará na zona onde ocoreu overflow);
-a variával offser, esta que indica a localização do endereço de retorno relativamente ao início do array, sendo que esta corresponde a conta ebp - buffer + 4 (o 4 é devido ao valor que queremos mudar se encontrar diretamente um adress antes ao valor de ebp - buffer e como a arquitetura é de 32 bit, os adresses tem tamanho de 4 bytes).
+
+- a variável shellcode, em que inserimos o shellcode em 32-bit para executar uma shell;
+- a variável start, em que definimos o local de início do shellcode no ficheiro, ou seja os 517 bytes totais menos o tamanho da variável shellcode;
+- a variável ret, que indica o novo endereço de retorno, o qual definimos como o ebp + 400 (400 foi escolhido por ser um valor superior aos 100 bytes referidos anteriormente, para ter a certeza que este estará na zona onde ocoreu overflow);
+- a variával offser, esta que indica a localização do endereço de retorno relativamente ao início do array, sendo que esta corresponde à fórmula ebp - buffer + 4 (o 4 é devido ao valor que queremos mudar se encontrar diretamente um adress antes ao valor de ebp - buffer e como a arquitetura é de 32 bit, os adresses tem tamanho de 4 bytes).
 
 ![Alt text](image-8.png)
 
