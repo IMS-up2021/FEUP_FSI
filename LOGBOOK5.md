@@ -6,13 +6,13 @@
 
 Começamos por desativar algumas defesas do sistem operativo, nomeadamente a randomização do espaço de endereços e configurar o /bin/sh para contornar a diminuiçao de privilegios quando chamado através de um processo Set-UID, usando estes comandos:
 
-![Alt text](image-1.png)
+![Alt text](/images/image-1.png)
 
 ### Task 1
 
 Após uma análise do código apresesntado e perceber como funciona, compilámos o código guardado em call_shellcode.c usando o comando make, visto que o que é requerido para compilar o código já se encontrava na makefile. Após compilado, são criados 2 ficheiro, a32.out e a64.out,  que após serem corridos podemos observar que abriam shells no mesmo diretório de onde os ficheiros se encontram:
 
-![Alt text](image-2.png)
+![Alt text](/images/image-2.png)
 
 ### Task 2
 
@@ -24,11 +24,11 @@ Desativarmos o StackGuard, compilámos o código, demos-lhe permisão de root e 
 
 Nesta task começamos a tentar procurar uma maneira de utilizar a vulnerabilidade que descobrimos. Começamos por criar um ficheiro badfile, onde vai ser guardada a payload. Depois corremos o ficheiro stack-L1-dbg com o debugger e após a inserção dos comandos indicados no tutorial e os indicados no moodle (para garantir que os endereços da stack são iguais tanto no modo debugging como fora dele) e descobrimos o ebp e o endereço de início do buffer:
 
-![Alt text](image-3.png)
-![Alt text](image-4.png)
-![Alt text](image-5.png)
-![Alt text](image-6.png)
-![Alt text](image-7.png)
+![Alt text](/images/image-3.png)
+![Alt text](/images/image-4.png)
+![Alt text](/images/image-5.png)
+![Alt text](/images/image-6.png)
+![Alt text](/images/image-7.png)
 
 Com a informação obtida, preenchemos então os campos necessários no ficheiro exploit.py, sendo estes: 
 
@@ -37,24 +37,24 @@ Com a informação obtida, preenchemos então os campos necessários no ficheiro
 - a variável ret, que indica o novo endereço de retorno, o qual definimos como o ebp + 400 (400 foi escolhido por ser um valor superior aos 100 bytes referidos anteriormente, para ter a certeza que este estará na zona onde ocoreu overflow);
 - a variával offset, esta que indica a localização do endereço de retorno relativamente ao início do array, sendo que esta corresponde à fórmula ebp - buffer + 4 (o 4 é devido ao valor que queremos mudar se encontrar diretamente um adress antes ao valor de ebp - buffer e como a arquitetura é de 32 bit, os adresses tem tamanho de 4 bytes).
 
-![Alt text](image-8.png)
+![Alt text](/images/image-8.png)
 
 Com esta informação preenchida, podemos então correr o código python, que preenche o ficheiro badfile, seguido do ficheiro stack-L1, e podemos então observar que obtemos uma shell com privilégios de root, como previsto:
 
-![Alt text](image-16.png)
+![Alt text](/images/image-16.png)
 
 ### Task 4
 
 A task 4 é bastante semelhante a task 3, só que desta vez não temos acesso à variável ebp.
 Repetindo o processo de debugging feito na task 3, desta vez para stack-L2-dbg, mas desta vez sem o comando p $ebp, obtemos então a nova informação com que vamos preencher o ficheiro exploit.py, mas desta vez temos que improvizar um pouco, mudando a fórmula do ret para buffer + 400 (400 continua aqui pela mesma razão da task anterior) e como não temos acesso ao offset, vamos colocar return adresses em todos os sítios possíveis de serem o correto ao mesmo tempo, fazendo uso de um for loop e modificando ligeiramente o código dado pelos professores.
 
-![Alt text](image-9.png)
-![Alt text](image-10.png)
-![Alt text](image-11.png)
-![Alt text](image-12.png)
-![Alt text](image-15.png)
+![Alt text](/images/image-9.png)
+![Alt text](/images/image-10.png)
+![Alt text](/images/image-11.png)
+![Alt text](/images/image-12.png)
+![Alt text](/images/image-15.png)
 
 
 Após realizadas estas modificações no ficheiro exploit.py, corremos o ficheiro para preencher o ficheiro badfile com a payload e corremos então o ficheiro stack-L2 e vamos obter novamente uma shell com privilégios root como esperado:
 
-![Alt text](image-14.png)
+![Alt text](/images/image-14.png)
