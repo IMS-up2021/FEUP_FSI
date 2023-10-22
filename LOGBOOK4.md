@@ -83,7 +83,7 @@ Ao entrar no sevidor, podemos ler os ficheiros que lá estão guarados, e de des
 - o ficheiro "my_script.sh", que faz chamadas que vão buscar environment variables ao diretório "/env" e também chama o ficheiro main.c compilado (reader);
 - o ficheiro "main.c", que usa a função access;
 
-Descobrimos também que o ficheiro "my_script.sh" é corrido regularmente com privilégio de root através de crond, o que levou a possibilidade de se conseguirmos fazer com que esse ficheiro executa-se um programa nosso podermos ter acesso a flag, que está escodida atrás de privilégios de root.
+Descobrimos também que o ficheiro "my_script.sh" é corrido regularmente com privilégio de root através de crond, o que levou a possibilidade de se conseguirmos fazer com que esse ficheiro executa-se um programa nosso podermos ter acesso à flag, que está escodida atrás de privilégios de root.
 
 Após uma pesquisa na internet, descobrimos que a função acccess tem o seguinte formato: `int access(const char *pathname, int mode);`
 
