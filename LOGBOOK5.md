@@ -65,33 +65,46 @@ Após realizadas estas modificações no ficheiro exploit.py, corremos o ficheir
 
 #### Análise Inicial
 
-- Inicialmente, explorámos os arquivos fornecidos na plataforma CTF, executados no servidor na porta 4003.
-- Utilizando o comando `checksec`, verificamos que o programa (`main.c` compilado) tem arquitetura x86. O seu binário não é randomizado e não há proteções contra overflow no endereço de retorno ou execução na stack.
+Inicialmente, explorámos os arquivos fornecidos na plataforma CTF, executados no servidor na porta 4003.
+Utilizando o comando `checksec`, verificamos que o programa (`main.c` compilado) tem arquitetura x86. O seu binário não é randomizado e não há proteções contra overflow no endereço de retorno ou execução na stack.
+
+![Alt text](/images/_image1.png)
 
 #### Funcionamento do Código
 
-- Analisámos o código no `main.c` e identificámos a alocação de 8 bytes de memória para a variável `meme_file` e 32 bytes para a resposta do usuário, `buffer`.
-- A função `scanf` permite a cópia de até 40 bytes do stdin para o `buffer`, o que pode resultar em buffer overflow quando o input ultrapassa 32 bytes.
-- A disposição contínua da memória na stack permite a sobrescrita da área alocada para `meme_file`. Dado que as instruções subsequentes exibem o conteúdo do ficheiro contido em `meme_file`, o nosso objetivo é reescrever o conteúdo da variável para direcionar as instruções ao ficheiro `flag.txt`.
+Analisámos o código no `main.c` e identificámos a alocação de 8 bytes de memória para a variável `meme_file` e 32 bytes para a resposta do usuário, `buffer`.
+A função `scanf` permite a cópia de até 40 bytes do stdin para o `buffer`, o que pode resultar em buffer overflow quando o input ultrapassa 32 bytes.
+A disposição contínua da memória na stack permite a sobrescrita da área alocada para `meme_file`. Dado que as instruções subsequentes exibem o conteúdo do ficheiro contido em `meme_file`, o nosso objetivo é reescrever o conteúdo da variável para direcionar as instruções ao ficheiro `flag.txt`.
+
+![Alt text](/images/_image2.png)
 
 #### Exploração
 
--No terminal usando ```nc ctf-fsi.fe.up.pt 4003 ```, bastou escrever 32 caracteres (no nosso caso a) seguidos do nome do arquivo desejado.
-- Após o processamento, conseguimos acessar o conteúdo do arquivo `flag.txt` e obter a flag do desafio: `flag{be513fd339bd72a40365cea1da913558}`.
+No terminal usando ```nc ctf-fsi.fe.up.pt 4003```, bastou escrever 32 caracteres (no nosso caso a) seguidos do nome do arquivo desejado.
+Após o processamento, conseguimos acessar o conteúdo do arquivo `flag.txt` e obter a flag do desafio: `flag{be513fd339bd72a40365cea1da913558}`.
+
+![Alt text](/images/_image3.png)
 
 ### Segunda Parte
 
 #### Análise de Segurança
 
-- Assim como no desafio anterior, verificámos as proteções do programa em execução no servidor. A arquitetura é novamente x86, o binário também não é randomizado e não há proteções contra overflow no endereço de retorno ou execução na stack.
+Assim como no desafio anterior, verificámos as proteções do programa em execução no servidor. A arquitetura é novamente x86, o binário também não é randomizado e não há proteções contra overflow no endereço de retorno ou execução na stack.
+
+![Alt text](/images/_image4.png)
 
 #### Funcionamento do Código
 
-- Em `main.c`, há alocação de 9 bytes para `meme_file`, 4 bytes para um valor `val`, e 32 bytes para a resposta do usuário, `buffer`.
-- A abordagem é semelhante à primeira parte; no entanto, o conteúdo do arquivo só é exibido quando o valor em `val` é igual a `0xfefc2324`.
+Em `main.c`, há alocação de 9 bytes para `meme_file`, 4 bytes para um valor `val`, e 32 bytes para a resposta do usuário, `buffer`.
+A abordagem é semelhante à primeira parte; no entanto, o conteúdo do arquivo só é exibido quando o valor em `val` é igual a `0xfefc2324`.
+
+![Alt text](/images/_image5.png)
 
 #### Exploração
 
-- O output inicial dá a conhecer o valor inicial de `val`. Com essa informação, reconstruímos os bytes necessários para que `val` seja igual a `0xfefc2324`, ou seja `val` tem guardado o valor `\x24\x23\xfc\xfe`.
-- Apó copiar o programa Python fornecido no desafio anterior e alterar o remote, na seção de injeção de conteúdo no servidor, bastou escrever 32 caracteres (mais uma vez a) seguidos do novo valor de `val` e do nome do arquivo desejado.
-- Ao executar, conseguimos acessar o conteúdo do arquivo `flag.txt` e adquirir a flag do desafio: `flag{6e694ce7b04d592f2882fccac8453b4a}`.
+O output inicial dá a conhecer o valor inicial de `val`. Com essa informação, reconstruímos os bytes necessários para que `val` seja igual a `0xfefc2324`, ou seja `val` tem guardado o valor `\x24\x23\xfc\xfe`.
+Após copiar o programa Python fornecido no desafio anterior e alterar o remote, na seção de injeção de conteúdo no servidor, bastou escrever 32 caracteres (mais uma vez a) seguidos do novo valor de `val` e do nome do arquivo desejado.
+Ao executar, conseguimos acessar o conteúdo do arquivo `flag.txt` e adquirir a flag do desafio: `flag{6e694ce7b04d592f2882fccac8453b4a}`.
+
+![Alt text](/images/_image6.png)
+![Alt text](/images/_image7.png)
