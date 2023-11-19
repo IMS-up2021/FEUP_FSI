@@ -60,7 +60,9 @@ Após acedermos ao perfil da Alice da mesma maneira que acedemos ao perfil do ad
 
 Ao voltar à pagina anterior e comparar com os valores antigos, podemos ver que para além do adress da Alice estar agora definido como "ali", o seu salário também mudou para "123456".
 
+Antes do edit
 ![Alt text](/images/img15.png)
+Após o edit
 ![Alt text](/images/img16.png)
 
 **Task 3.2: Modify other people’ salary**
