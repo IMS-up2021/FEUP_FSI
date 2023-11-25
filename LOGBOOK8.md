@@ -87,3 +87,9 @@ Nesta task reutilizamos a string de input da task anterior e mudamos salary='1' 
 Após o input, se tentarmos então aceder ao perfil do Boby usando a password gotcha, podemos ver que conseguimos, e como tanto o nome como a password são apresentados no url da página podemos demonstrar que de facto usamos o nome Boby e a password gotcha.
 
 ![Alt text](/images/img20.png)
+
+## SQL Injection CTF
+Começamos por analisar o ficheiro php fornecido em buscar de vulnerabilidades e descobrimos que os inputs fornecidos pelo o utilizador não são sanitizados, o que significa que existe uma vulnerabilidade de sql injection. Sabendo isto e sabendo que quando o username do utilizador que deu login é admin o conteúdo do ficheiro flag.txt é apresentado na página, ficamos então com um objetivo bem definido, encontrar maneira de fazer login com a conta com username admin para obtermos a flag.
+Usando o que aprendemos nas aulas, sabemos que basta inserir uma string que acabe em -- no username para comentar o restante da query, ignorando a verificação da password. Entao inserimos a string admin'-- no username, que após inserido o username admin termina a string que é pesquisada na query com ' e comenta tudo o resto com --. Somos também obrigados a inserir algo no username, apesar que não interessa o que é inserido sendo que não vai ser usado.
+
+Ao submeter então este login form, é então apresentada a flag desejada, juntamente com a informação que o login como admin foi feito com sucesso.
