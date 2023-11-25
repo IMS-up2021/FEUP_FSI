@@ -77,7 +77,7 @@ Podemos observar que o valor da target variable é 0x00005000, como pretendido.
 ### Desafio 1
 Após o download do ficheiros que nos eram disponibilizados, começamos por executar o comando checksec no ficheiro program que estava dentro destes contidos, descobrindo que este não tem os endereços randomizados e tem canários no endereço de retorno, isto tudo numa arquitetura little endian de 32 bits.
 
-Passando então a analisar o código contido em main.c descobrimos que este aceita um input de 32 bytes que é impresso por um printf, o que significa que é vulnerável a um ataque de format strings.
+Passando então a analisar o código contido em main.c descobrimos que este aceita um input de 32 bytes que é impresso por um printf, o que significa que é vulnerável a um ataque de format strings, esta que nos permite tanto ler como escrever o que quisermos em memória, neste caso na heap.
 Sabendo isto, abrimos o programa no debugger gdb e procuramos pela localizaçao da flag, guardada na variável global flag pela função load_flag.
 
 Tendo acesso ao endereço da flag, foi então apenas uma questão de o transformar no formato string e inseri-lo no código python fornecido seguido de um "%s" para imprimir a string contida em flag e correr o mesmo para obtermos a flag.
