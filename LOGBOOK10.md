@@ -46,3 +46,13 @@ Observamos fácilmente que na encriptação em ecb mostra algumas partes da imag
 ![Alt text](/images/im16.png)
 
 Isto acontece visto que o ecb encripta cada bloco independentemente e em sequencia, enquanto o cbc encripta cada bloco combinado este com o bloco cifrado anterior usando um xor, o que significa que o resultado vai ser completamente diferente da imagem original.
+
+##CTF 10 - Weak Encryption
+###Análise Inicial
+
+Ao analisar o código de encriptação, descobrimos que a alteração feita ocorre na geração da chave de encriptação, gerando um valor de 3 bytes que é anexado a 13 bytes com o valor 0. Sabendo que a chave só pode ter um valor compreendido entre 0 e 2²⁴, percebemos que um brute-force attack torna-se viável.
+
+###Execução do ataque
+
+Tendo acesso às funções de encriptação e desencriptação, primeiro obtemos o nosso texto encriptado e o nonce respetivo, chamando a função netcat na porta 6003 do endereço do ctf.
+Obtendo os valores encriptados, iteramos chamadas da função de desencriptação com valores da chave de 0 a 2²⁴, e assim que o texto retornado começar com b'flag{', sabemos que utilizamos a chave correta e obtemos assim a flag.
