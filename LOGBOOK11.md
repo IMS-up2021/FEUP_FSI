@@ -78,7 +78,7 @@ openssl req -newkey rsa:2048 -sha256 -keyout server.key -out server.csr -subj "/
 
 Este comando resultou na criação de dois arquivos: a chave RSA do site (server.key) e o Pedido de Certificado do site (server.csr).
 
-### Task 3 - 
+### Task 3 - Generating a Certificate for your server
 
 Para emitir um certificado para o nosso servidor www.bank32.com, executamos o seguinte comando:
 
@@ -94,7 +94,7 @@ Como resultado, obtivemos o arquivo server.crt. O conteúdo desse arquivo confir
 ![Alt text](/images/Screenshot_from_2023-12-10_16-30-26.png)
 ![Alt text](/images/Screenshot_from_2023-12-10_16-30-35.png)
 
-### Task 4 - 
+### Task 4 - Deploying Certificate in an Apache-Based HTTPS Website
 
 Copiamos os arquivos "server.crt" e "server.key" para o diretório compartilhado /volumes e renomeamos para "bank32.crt" e "bank32.key", respectivamente. Em seguida, ajustamos o arquivo "etc/apache2/sites-available/bank32_apache_ssl.conf" dentro do container para utilizar o certificado e a chave da pasta compartilhada da seguinte forma:
 
@@ -121,7 +121,7 @@ $ service apache2 start
 ![Alt text](/images/Screenshot_from_2023-12-10_18-05-47.png)
 
 
-###Task 5 - Launching a Man-In-The-Middle Attack
+### Task 5 - Launching a Man-In-The-Middle Attack
 
 A configuração do servidor foi alterada para apresentar o site www.example.com com as configurações anteriores. O arquivo "etc/apache2/sites-available/bank32_apache_ssl.conf" foi ajustado da seguinte maneira:
 
@@ -137,7 +137,7 @@ Ao reconstruir o servidor e acessar o site www.example.com, observamos que o nav
 
 ![Alt text](/images/Screenshot_from_2023-12-10_18-15-47.png)
 
-###Task 6 - Launching a Man-In-The-Middle Attack with a Compromised CA
+### Task 6 - Launching a Man-In-The-Middle Attack with a Compromised CA
 Assumindo que a nossa Autoridade de Certificação (CA) está comprometida, ela pode ser utilizada para gerar certificados para um site malicioso. Neste caso, desejamos criar um certificado para o site www.example.com, para isso repetimos os seguintes comandos da Tarefa 2:
 
 ```bash
