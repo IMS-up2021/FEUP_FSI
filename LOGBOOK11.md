@@ -23,7 +23,7 @@ Iniciar os Containers:
 dcup
 ```
 
-###Task 1 - Becoming a Certificate Authority (CA)
+### Task 1 - Becoming a Certificate Authority (CA)
 
 Começamos por copiar o arquivo de configuração de certificado padrão, localizado em /usr/lib/ssl/openssl.cnf, para o diretório de trabalho local. Em seguida, comentamos a linha "unique_subject" e executamos os seguintes comandos para criar o ambiente da nossa própria CA:
 
@@ -68,7 +68,7 @@ Este ficheiro contém:
 - Os expoentes público e privado (nos campos publicExponent e privateExponent, respectivamente).
 - O coeficiente (campo coeficient).
 
-###Task 2 - Generating a Certificate Request for Your Web Server
+### Task 2 - Generating a Certificate Request for Your Web Server
 
 Utilizamos o seguinte comando para gerar um certificado para o site www.bank32.com:
 
