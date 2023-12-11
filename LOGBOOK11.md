@@ -56,6 +56,18 @@ openssl rsa -in ca.key -text -noout
 
 Podemos identificar que se trata de um certificado de Autoridade de Certificação (CA) observando a presença do atributo "certificate authority" na seção "basic constraints", que possui o valor verdadeiro.
 
+![Alt text](/images/Screenshot_from_2023-12-10_13-02-14.png)
+
+Além disso, este certificado é autoassinado, indicado pelo fato de que os campos "issuer" e "subject" são idênticos.
+
+![Alt text](/images/Screenshot_from_2023-12-10_13-03-03.png)
+
+Este ficheiro contém:
+- Dois números primos (presentes nos campos prime1 e prime2).
+- O módulo (campo modulus).
+- Os expoentes público e privado (nos campos publicExponent e privateExponent, respectivamente).
+- O coeficiente (campo coeficient).
+
 ###Task 2 - Generating a Certificate Request for Your Web Server
 
 Utilizamos o seguinte comando para gerar um certificado para o site www.bank32.com:
@@ -78,6 +90,9 @@ openssl ca -config myCA_openssl.cnf -policy policy_anything \
 ```
 
 Como resultado, obtivemos o arquivo server.crt. O conteúdo desse arquivo confirma que se trata de um certificado destinado ao servidor mencionado.
+
+![Alt text](/images/Screenshot_from_2023-12-10_16-30-26.png)
+![Alt text](/images/Screenshot_from_2023-12-10_16-30-35.png)
 
 ### Task 4 - 
 
@@ -102,10 +117,15 @@ Para iniciar o servidor Apache, primeiro abrimos um terminal no contêiner e ins
 ```bash
 $ service apache2 start
 ```
+![Alt text](/images/Screenshot_from_2023-12-10_18-02-14.png)
+![Alt text](/images/Screenshot_from_2023-12-10_18-05-47.png)
+
 
 ###Task 5 - Launching a Man-In-The-Middle Attack
 
 A configuração do servidor foi alterada para apresentar o site www.example.com com as configurações anteriores. O arquivo "etc/apache2/sites-available/bank32_apache_ssl.conf" foi ajustado da seguinte maneira:
+
+![Alt text](/images/Screenshot_from_2023-12-10_18-09-48.png)
 
 Também alteramos o DNS da vítima, associando o hostname www.example.com ao IP do servidor web malicioso:
 
@@ -114,6 +134,8 @@ sudo nano /etc/hosts     # Adicionar a entrada '10.9.0.80 www.example.com'
 ```
 
 Ao reconstruir o servidor e acessar o site www.example.com, observamos que o navegador emite um alerta indicando um potencial risco de segurança.
+
+![Alt text](/images/Screenshot_from_2023-12-10_18-15-47.png)
 
 ###Task 6 - Launching a Man-In-The-Middle Attack with a Compromised CA
 Assumindo que a nossa Autoridade de Certificação (CA) está comprometida, ela pode ser utilizada para gerar certificados para um site malicioso. Neste caso, desejamos criar um certificado para o site www.example.com, para isso repetimos os seguintes comandos da Tarefa 2:
@@ -125,4 +147,8 @@ $ openssl ca -config myCA_openssl.cnf -policy policy_anything -md sha256 -days 3
 
 Em seguida, ajustamos o arquivo de configuração do servidor em "etc/apache2/sites-available/bank32_apache_ssl.conf" para utilizar os dois arquivos gerados: example.crt e example.key.
 
+![Alt text](/images/Screenshot_from_2023-12-10_18-30-00.png)
+
 E, assim, a ligação já é segura.
+
+![Alt text](/images/Captura_de_ecra_de_2023-12-10_23-31-37.png)
