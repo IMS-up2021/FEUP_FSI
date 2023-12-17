@@ -152,3 +152,13 @@ Em seguida, ajustamos o arquivo de configuração do servidor em "etc/apache2/si
 E, assim, a ligação já é segura.
 
 ![Alt text](/images/Captura_de_ecra_de_2023-12-10_23-31-37.png)
+
+## RSA CTF
+Começamos por seguir as tarefas recomendadas na página do moodle. Encontramos o algoritmo de Miler-Rabin na página https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/ e usamos o mesmo no nosso código. Aproveitando o código que nos é dado, construímos um código para encriptar e decriptar uma string. Podemos então responder as perguntas pedidas:
+- Como consigo usar a informação que tenho para inferir os valores usados no RSA que cifrou a flag?
+    - Sabendo p e q, conseguimos facilmente calcular todos os outros valores usando formulas conhecidas (n = p*q e ed % ((p-1)*(q-1)) = 1).
+- Como consigo descobrir se a minha inferência está correta?
+    - Se encriptarmos uma string e a decriptarmos em seguida e o resultado for igual à string inicial sabemos que a inferência está correta.
+- Finalmente, como posso extrair a minha chave do criptograma que recebi?
+    - Ao sabermos os primos p e q usado conseguimos calcular as chaves tanto publicas como privadas, como referido na primeira pergunta, que depois podemos utilizar para decifrar a cifra recebida.
+Após esta análise, usamos o código que escrevemos em cima para criar uma nova função que calcula o primo seguinte a um valor dado. Passando 2^512 e 2^513 a esta função conseguimos determinar p e q respetivamente e depois basta calcular d. Com estes novos valores, passamos os mesmos a função dec juntamente com unhexlify(cifra) e obtemos um valor que após usarmos o .decode() nos revela a flag em string: flag{7860aa809d11eaebd4d9ebb67ec56c26}.
