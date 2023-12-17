@@ -154,7 +154,68 @@ E, assim, a ligação já é segura.
 ![Alt text](/images/Captura_de_ecra_de_2023-12-10_23-31-37.png)
 
 ## RSA CTF
-Começamos por seguir as tarefas recomendadas na página do moodle. Encontramos o algoritmo de Miler-Rabin na página https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/ e usamos o mesmo no nosso código. Aproveitando o código que nos é dado, construímos um código para encriptar e decriptar uma string. Podemos então responder as perguntas pedidas:
+Começamos por seguir as tarefas recomendadas na página do moodle. Encontramos o algoritmo de Miler-Rabin na página https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/ e usamos o mesmo no nosso código. Aproveitando o código que nos é dado, construímos um código para encriptar e decriptar uma string.
+
+```
+def miillerTest(d, n):
+     
+    # Pick a random number in [2..n-2]
+    # Corner cases make sure that n > 4
+    a = 2 + random.randint(1, n - 4);
+ 
+    # Compute a^d % n
+    x = pow(a, d, n);
+ 
+    if (x == 1 or x == n - 1):
+        return True;
+ 
+    # Keep squaring x while one 
+    # of the following doesn't 
+    # happen
+    # (i) d does not reach n-1
+    # (ii) (x^2) % n is not 1
+    # (iii) (x^2) % n is not n-1
+    while (d != n - 1):
+        x = (x * x) % n;
+        d *= 2;
+ 
+        if (x == 1):
+            return False;
+        if (x == n - 1):
+            return True;
+ 
+    # Return composite
+    return False;
+ 
+# It returns false if n is 
+# composite and returns true if n
+# is probably prime. k is an 
+# input parameter that determines
+# accuracy level. Higher value of 
+# k indicates more accuracy.
+def isPrime(n, k):
+     
+    # Corner cases
+    if (n <= 1 or n == 4):
+        return False;
+    if (n <= 3):
+        return True;
+ 
+    # Find r such that n = 
+    # 2^d * r + 1 for some r >= 1
+    d = n - 1;
+    while (d % 2 == 0):
+        d //= 2;
+ 
+    # Iterate given number of 'k' times
+    for i in range(k):
+        if (miillerTest(d, n) == False):
+            return False;
+ 
+    return True;
+```
+
+Podemos então responder as perguntas pedidas:
 - Como consigo usar a informação que tenho para inferir os valores usados no RSA que cifrou a flag?
     - Sabendo p e q, conseguimos facilmente calcular todos os outros valores usando formulas conhecidas (n = p*q e ed % ((p-1)*(q-1)) = 1).
 - Como consigo descobrir se a minha inferência está correta?
@@ -163,3 +224,22 @@ Começamos por seguir as tarefas recomendadas na página do moodle. Encontramos 
     - Ao sabermos os primos p e q usado conseguimos calcular as chaves tanto publicas como privadas, como referido na primeira pergunta, que depois podemos utilizar para decifrar a cifra recebida.
 
 Após esta análise, usamos o código que escrevemos em cima para criar uma nova função que calcula o primo seguinte a um valor dado. Passando 2^512 e 2^513 a esta função conseguimos determinar p e q respetivamente e depois basta calcular d. Com estes novos valores, passamos os mesmos a função dec juntamente com unhexlify(cifra) e obtemos um valor que após usarmos o .decode() nos revela a flag em string: flag{7860aa809d11eaebd4d9ebb67ec56c26}.
+```
+def nextPrime(number):
+
+	while True:
+		if isPrime(number, 4) and n % number == 0:
+			return number
+		else:
+			number += 1
+
+ciphertext = "6366343333613637386263303333656230393261356662633636383834373165643964316235363436353961303564306237376233373465653639393235353939613439613033636337306630376132306564626338393461396439343132623262343232303835373366656438626135663634653761663731633233663061333632633361306530633366666563383731323665613338323331333535656663363838666665623934633033623430303538396335623532353662623762333736363963653661313230383063323666326662646438623566373136306263653964373034653331383235313834396564656135653066366464323365366230313030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030"
+n = 359538626972463181545861038157804946723595395788461314546860162315465351611001926265416954644815072042240227759742786715317579537628833244985694861278997871052684504401596494019122799039009989371808178352060966438579515613360227960308969957859170183912581829276320781354104234997246446865042463594219967161283
+p = nextPrime(2**512)
+q = nextPrime(2**513)
+e = 0x10001
+d = pow(e, -1, ((p-1)*(q-1)))
+
+flag = dec(unhexlify(ciphertext), d, n)
+print(flag.decode())
+```
