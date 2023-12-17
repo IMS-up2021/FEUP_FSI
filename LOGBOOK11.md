@@ -217,7 +217,7 @@ def isPrime(n, k):
 
 Podemos então responder as perguntas pedidas:
 - Como consigo usar a informação que tenho para inferir os valores usados no RSA que cifrou a flag?
-    - Sabendo p e q, conseguimos facilmente calcular todos os outros valores usando formulas conhecidas (n = p*q e ed % ((p-1)*(q-1)) = 1).
+    - Sabendo p e q, conseguimos facilmente calcular todos os outros valores usando formulas conhecidas (n = p\*q e ed % ((p-1)\*(q-1)) = 1).
 - Como consigo descobrir se a minha inferência está correta?
     - Se encriptarmos uma string e a decriptarmos em seguida e o resultado for igual à string inicial sabemos que a inferência está correta.
 - Finalmente, como posso extrair a minha chave do criptograma que recebi?
