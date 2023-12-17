@@ -161,4 +161,5 @@ Começamos por seguir as tarefas recomendadas na página do moodle. Encontramos 
     - Se encriptarmos uma string e a decriptarmos em seguida e o resultado for igual à string inicial sabemos que a inferência está correta.
 - Finalmente, como posso extrair a minha chave do criptograma que recebi?
     - Ao sabermos os primos p e q usado conseguimos calcular as chaves tanto publicas como privadas, como referido na primeira pergunta, que depois podemos utilizar para decifrar a cifra recebida.
+
 Após esta análise, usamos o código que escrevemos em cima para criar uma nova função que calcula o primo seguinte a um valor dado. Passando 2^512 e 2^513 a esta função conseguimos determinar p e q respetivamente e depois basta calcular d. Com estes novos valores, passamos os mesmos a função dec juntamente com unhexlify(cifra) e obtemos um valor que após usarmos o .decode() nos revela a flag em string: flag{7860aa809d11eaebd4d9ebb67ec56c26}.
