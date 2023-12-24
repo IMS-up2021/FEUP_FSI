@@ -70,12 +70,12 @@ Foi nos pedido para correr este código para 3 IP addresses diferentes. No prime
 ![Alt text](/images/f19.png)
 ![Alt text](/images/f20.png)
 
-Já no segundo caso não é recebido nada e o host é dito unreachable, isto acontece porque visto que o host não está na LAN, o seu MAC address é desconhecido, e como este é necessário para realizar os packets, nenhum packet é enviado.
+Já no segundo caso não é recebido nada e o host é dito unreachable, isto acontece porque visto que o host não está na LAN, o seu MAC address é desconhecido, e como este é necessário para criar os ARQ packets, nenhum packet é enviado.
 
 ![Alt text](/images/f21.png)
 ![Alt text](/images/f22.png)
 
-Finalmente no terceiro caso ao corrermos o código e fazermos ping do host 8.8.8.8 recebemos dois pares de respostas, a resposta real e a resposta spoofed que criamos.
+Finalmente no terceiro caso ao corrermos o código e fazermos ping do host 8.8.8.8 recebemos um par de respostas, a resposta real e a resposta spoofed que criamos.
 
 ![Alt text](/images/f23.png)
 ![Alt text](/images/f24.png)
